@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Çarpma Sorusu</title>
     <style>
-        .dogru {
+        .dogru,
+        #count {
             color: green;
         }
 
@@ -25,6 +26,7 @@
     <div>
         <span id="sayi1"></span> x <span id="sayi2"></span> = <span>?</span>
         <input type="number" id="cevap" min="0" max="9999" placeholder="Cevap">
+        <h1 id="count"></h1>
         <button onclick="cevabiKontrolEt()">Cevapla</button>
     </div>
 
@@ -32,6 +34,9 @@
 
     <script>
         // 10-99 arasında rastgele iki sayı üretme fonksiyonu
+        let count = 0
+        let countH2 = document.getElementById('count')
+        countH2.innerText = count;
         function yeniSoru() {
             let sayi1 = Math.floor(Math.random() * 90) + 10;
             let sayi2 = Math.floor(Math.random() * 90) + 10;
@@ -53,6 +58,8 @@
                 sonucParagraf.className = "dogru";
                 // Yeni soru oluştur
                 ({ sayi1, sayi2 } = yeniSoru());
+                count++;
+                countH2.innerText = count
             } else {
                 sonucParagraf.textContent = "Yanlış";
                 sonucParagraf.className = "yanlis";
@@ -61,6 +68,12 @@
             // Input alanını temizle
             document.getElementById("cevap").value = '';
         }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key == "Enter") {
+                cevabiKontrolEt();
+            }
+        })
     </script>
 
 </body>
