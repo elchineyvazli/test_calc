@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çarpma Sorusu</title>
+    <style>
+        .dogru {
+            color: green;
+        }
+
+        .yanlis {
+            color: red;
+        }
+
+        input[type="number"] {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <span id="sayi1"></span> x <span id="sayi2"></span> = <span>?</span>
+        <input type="number" id="cevap" min="0" max="9999" placeholder="Cevap">
+        <button onclick="cevabiKontrolEt()">Cevapla</button>
+    </div>
+
+    <p id="sonuc"></p>
+
+    <script>
+        // 10-99 arasında rastgele iki sayı üretme fonksiyonu
+        function yeniSoru() {
+            let sayi1 = Math.floor(Math.random() * 90) + 10;
+            let sayi2 = Math.floor(Math.random() * 90) + 10;
+            document.getElementById("sayi1").textContent = sayi1;
+            document.getElementById("sayi2").textContent = sayi2;
+            return { sayi1, sayi2 };
+        }
+
+        // Başlangıçta bir soru oluştur
+        let { sayi1, sayi2 } = yeniSoru();
+
+        function cevabiKontrolEt() {
+            let dogruSonuc = sayi1 * sayi2;
+            let kullaniciCevabi = document.getElementById("cevap").value;
+            let sonucParagraf = document.getElementById("sonuc");
+
+            if (kullaniciCevabi == dogruSonuc) {
+                sonucParagraf.textContent = "Doğru";
+                sonucParagraf.className = "dogru";
+                // Yeni soru oluştur
+                ({ sayi1, sayi2 } = yeniSoru());
+            } else {
+                sonucParagraf.textContent = "Yanlış";
+                sonucParagraf.className = "yanlis";
+            }
+
+            // Input alanını temizle
+            document.getElementById("cevap").value = '';
+        }
+    </script>
+
+</body>
+
+</html>
